@@ -15,7 +15,7 @@ export default function Project({ project }: ProjectProps) {
 
   return (
     <Link
-      href={`/projects/${project.id}`}
+      href={`/projects/add-project?projectId=${project.id}`}
       className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
     >
       <figure>

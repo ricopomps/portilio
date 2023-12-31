@@ -13,3 +13,13 @@ export const findProjectsSchema = z.object({
 });
 
 export type FindProjectsSchema = z.infer<typeof findProjectsSchema>;
+
+export const updateProjectSchema = createProjectSchema.extend({
+  id: z.string().min(1),
+});
+
+export type UpdateProjectSchema = z.infer<typeof updateProjectSchema>;
+
+export const deleteProjectSchema = z.object({
+  id: z.string().min(1),
+});

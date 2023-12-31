@@ -26,6 +26,7 @@ export default function AddProjectForm() {
     try {
       const project = await ProjectApi.createProject(data);
       toast.success(`Project '${project.title}' created`);
+      router.refresh();
       router.push("/projects");
     } catch (error) {
       handleError(error);

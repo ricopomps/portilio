@@ -3,6 +3,7 @@ import { UserButton } from "@clerk/nextjs";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function NavBar() {
   return (
@@ -27,6 +28,7 @@ export default function NavBar() {
               elements: { avatarBox: { width: "2.5rem", height: "2.5rem" } },
             }}
           />
+          <ThemeToggleButton />
           <Link passHref href={"/projects/add-project"} className="w-full">
             <button className="btn btn-primary btn-block">
               <Plus size={20} className="mr-2" />

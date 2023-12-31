@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -19,7 +20,7 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        lightTheme: {
+        light: {
           primary: "#f4aa3a",
           secondary: "#f4f4a1",
           accent: "#1be885",
@@ -34,6 +35,23 @@ const config: Config = {
           },
         },
       },
+      {
+        dark: {
+          primary: "#e3a421",
+          secondary: "#1f1f35",
+          accent: "#66d07d",
+          neutral: "#ffffff",
+          "base-100": "#1e1e1e",
+          info: "#5267b1",
+          success: "#0f8f4f",
+          warning: "#f57c00",
+          error: "#9e3d46",
+          body: {
+            "background-color": "#1a1a1a",
+          },
+        },
+      },
+      //   "dark",
     ],
   },
 };

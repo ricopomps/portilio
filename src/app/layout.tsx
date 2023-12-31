@@ -1,9 +1,10 @@
 import NavBar from "@/components/NavBar";
 import { ClerkProvider } from "@clerk/nextjs";
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ThemeProvider } from "./ThemeProvider";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,13 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <NavBar />
-          <main className="m-auto min-w-[300px] max-w-7xl p-4">{children}</main>
-          <ToastContainer />
+          <ThemeProvider attribute="data-theme">
+            <NavBar />
+            <main className="m-auto min-w-[300px] max-w-7xl p-4">
+              {children}
+            </main>
+            <ToastContainer />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

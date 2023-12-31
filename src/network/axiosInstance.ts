@@ -8,6 +8,7 @@ import {
 } from "./http-errors";
 
 const axiosInstace = axios.create({
+  baseURL: "/api",
   timeout: 50000,
   withCredentials: true,
 });

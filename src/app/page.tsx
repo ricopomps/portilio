@@ -17,8 +17,8 @@ export default function Home() {
         </span>
       </div>
       <p className="max-w-prose text-center">Navigate though portfolios</p>
-      <Link passHref href={"/add-project"} className="w-full">
-        <button className="btn btn-primary btn-block">Add project</button>
+      <Link passHref href={"/projects"} className="w-full">
+        <button className="btn btn-primary btn-block">View projects</button>
       </Link>
     </main>
   );

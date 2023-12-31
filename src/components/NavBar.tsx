@@ -17,6 +17,9 @@ export default function NavBar() {
           />
           <span className="font-bold">Portilio</span>
         </Link>
+        <Link href="/projects" className="flex items-center gap-1">
+          <span className="font-bold">Projects</span>
+        </Link>
         <div className="flex items-center gap-2">
           <UserButton
             afterSignOutUrl="/"
@@ -24,10 +27,12 @@ export default function NavBar() {
               elements: { avatarBox: { width: "2.5rem", height: "2.5rem" } },
             }}
           />
-          <button className="btn btn-primary btn-block">
-            <Plus size={20} className="mr-2" />
-            Add project
-          </button>
+          <Link passHref href={"/projects/add-project"} className="w-full">
+            <button className="btn btn-primary btn-block">
+              <Plus size={20} className="mr-2" />
+              Add project
+            </button>
+          </Link>
         </div>
       </div>
     </div>

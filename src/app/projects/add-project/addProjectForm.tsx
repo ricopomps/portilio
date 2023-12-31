@@ -1,22 +1,32 @@
 "use client";
 
+import LoadingButton from "@/components/LoadingButton";
+import {
+  CreateProjectSchema,
+  createProjectSchema,
+} from "@/lib/validation/project";
 import * as ProjectApi from "@/network/api/project";
-import { ProjectFormData } from "@/network/api/project";
 import { handleError } from "@/utils/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+
 export default function AddProjectForm() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<ProjectFormData>();
-  async function onSubmit(data: ProjectFormData) {
-    // Call your addProject function here
-    //addProject(data);
+    formState: { errors, isSubmitting },
+  } = useForm<CreateProjectSchema>({
+    resolver: zodResolver(createProjectSchema),
+  });
+  async function onSubmit(data: CreateProjectSchema) {
     try {
       const project = await ProjectApi.createProject(data);
       toast.success(`Project '${project.title}' created`);
+      router.push("/projects");
     } catch (error) {
       handleError(error);
     }
@@ -28,7 +38,7 @@ export default function AddProjectForm() {
         <input
           placeholder="Title"
           className="input input-bordered mb-3 w-full"
-          {...register("title", { required: "Title is required" })}
+          {...register("title")}
         />
         {errors.title && (
           <p className="mb-1 text-red-500">{errors.title.message}</p>
@@ -37,7 +47,7 @@ export default function AddProjectForm() {
         <textarea
           placeholder="Description"
           className="textarea textarea-bordered mb-3 w-full"
-          {...register("description", { required: "Description is required" })}
+          {...register("description")}
         />
         {errors.description && (
           <p className="text-red-500">{errors.description.message}</p>
@@ -46,15 +56,15 @@ export default function AddProjectForm() {
         <input
           placeholder="Image Url"
           className="input input-bordered mb-3 w-full"
-          {...register("imageUrl", { required: "Image URL is required" })}
+          {...register("imageUrl")}
         />
         {errors.imageUrl && (
           <p className="text-red-500">{errors.imageUrl.message}</p>
         )}
 
-        <button type="submit" className="btn btn-primary btn-block">
+        <LoadingButton type="submit" loading={isSubmitting}>
           Add project
-        </button>
+        </LoadingButton>
       </form>
     </div>
   );

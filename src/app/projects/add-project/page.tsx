@@ -1,7 +1,7 @@
 import AddProjectForm from "./addProjectForm";
 
 export const metadata = {
-  title: "Add project - Portilio",
+  title: "Portilio - Add project",
 };
 
 export default function AddProjectPage() {

@@ -9,13 +9,7 @@ export async function POST(req: Request) {
       data: formData,
     });
 
-    return NextResponse.json(
-      {
-        message: "Project creation successful",
-        payment: createdProject,
-      },
-      { status: 200 },
-    );
+    return NextResponse.json(createdProject, { status: 200 });
   } catch (error) {
     console.error("Error creating project:", error);
 

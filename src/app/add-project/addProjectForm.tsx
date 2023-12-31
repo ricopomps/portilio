@@ -4,6 +4,7 @@ import * as ProjectApi from "@/network/api/project";
 import { ProjectFormData } from "@/network/api/project";
 import { handleError } from "@/utils/utils";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 export default function AddProjectForm() {
   const {
     register,
@@ -15,6 +16,7 @@ export default function AddProjectForm() {
     //addProject(data);
     try {
       const project = await ProjectApi.createProject(data);
+      toast.success(`Project '${project.title}' created`);
     } catch (error) {
       handleError(error);
     }

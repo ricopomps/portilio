@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
@@ -16,11 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main className="m-auto min-w-[300px] max-w-7xl p-4">{children}</main>
-        <ToastContainer />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <main className="m-auto min-w-[300px] max-w-7xl p-4">{children}</main>
+          <ToastContainer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

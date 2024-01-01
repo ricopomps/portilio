@@ -28,3 +28,10 @@ export async function deleteProject(projectId: string) {
   });
   return response.data;
 }
+
+export async function searchProjects(search: string) {
+  const response = await api.get<Project[]>(
+    `${baseUrl}/search?search=${search}`,
+  );
+  return response.data;
+}

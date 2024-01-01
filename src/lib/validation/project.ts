@@ -23,3 +23,9 @@ export type UpdateProjectSchema = z.infer<typeof updateProjectSchema>;
 export const deleteProjectSchema = z.object({
   id: z.string().min(1),
 });
+
+export const searchProjectsSchema = z.object({
+  search: z.string().optional(),
+});
+
+export type SearchProjectsSchema = z.infer<typeof searchProjectsSchema>;

@@ -4,18 +4,22 @@ import Link from "next/link";
 
 interface ProjectProps {
   project: Project;
+  viewOnly?: boolean;
 }
 
-export default function Project({ project }: ProjectProps) {
+export default function Project({ project, viewOnly }: ProjectProps) {
   const wasUpdated = project.updatedAt > project.createdAt;
-
-  const createdUpdatedAtTimeStamp = (
-    wasUpdated ? project.updatedAt : project.createdAt
-  ).toDateString();
+  //   const createdUpdatedAtTimeStamp = (
+  //     wasUpdated ? project.updatedAt : project.createdAt
+  //   ).toDateString();
 
   return (
     <Link
-      href={`/projects/add-project?projectId=${project.id}`}
+      href={
+        viewOnly
+          ? `/project/${project.id}`
+          : `/projects/add-project?projectId=${project.id}`
+      }
       className="card w-full bg-base-100 transition-shadow hover:shadow-xl"
     >
       <figure>

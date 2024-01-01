@@ -18,6 +18,9 @@ export default function NavBar() {
           />
           <span className="font-bold">Portilio</span>
         </Link>
+        <Link href="/search" className="flex items-center gap-1">
+          <span className="font-bold">Search</span>
+        </Link>
         <Link href="/projects" className="flex items-center gap-1">
           <span className="font-bold">Projects</span>
         </Link>

@@ -9,7 +9,6 @@ export default function ThemeToggleButton() {
   return (
     <button
       onClick={() => {
-        console.log(theme);
         if (theme === "dark") setTheme("light");
         else setTheme("dark");
       }}

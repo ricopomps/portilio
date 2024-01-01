@@ -29,3 +29,7 @@ export const searchProjectsSchema = z.object({
 });
 
 export type SearchProjectsSchema = z.infer<typeof searchProjectsSchema>;
+
+export const searchUserSchema = z.object({
+  username: z.string().optional(),
+});

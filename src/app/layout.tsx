@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
@@ -23,9 +24,10 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ThemeProvider attribute="data-theme">
-            <NavBar />
             <main className="m-auto min-w-[300px] max-w-7xl p-4">
+              <NavBar />
               {children}
+              <Footer />
             </main>
             <ToastContainer />
           </ThemeProvider>

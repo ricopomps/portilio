@@ -34,3 +34,19 @@ export function handleError(error: unknown) {
 export function isServer() {
   return typeof window === "undefined";
 }
+
+export function toFormData(data: Record<string, any>) {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      if (value instanceof FileList) {
+        formData.append(key, value[0]);
+      } else {
+        formData.append(key, value);
+      }
+    }
+  });
+
+  return formData;
+}

@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Project } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 interface AddProjectFormProps {
@@ -26,12 +26,13 @@ export default function AddProjectForm({ projectToEdit }: AddProjectFormProps) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<CreateProjectSchema>({
     resolver: zodResolver(createProjectSchema),
-    defaultValues: {
-      ...projectToEdit,
-    },
+    // defaultValues: {
+    //   ...projectToEdit,
+    // },
   });
 
   async function onSubmit(data: CreateProjectSchema) {
@@ -94,10 +95,24 @@ export default function AddProjectForm({ projectToEdit }: AddProjectFormProps) {
           <p className="text-red-500">{errors.description.message}</p>
         )}
 
-        <input
-          placeholder="Image Url"
-          className="input input-bordered mb-3 w-full"
-          {...register("imageUrl")}
+        <Controller
+          control={control}
+          name={"imageUrl"}
+          render={({ field: { value, onChange, ...field } }) => {
+            return (
+              <input
+                {...field}
+                onChange={(event) => {
+                  if (event.target?.files?.[0]) onChange(event.target.files[0]);
+                }}
+                placeholder="Image"
+                type="file"
+                id="imageUrl"
+                className="file-input file-input-bordered mb-3 w-full"
+                accept="image/*"
+              />
+            );
+          }}
         />
         {errors.imageUrl && (
           <p className="text-red-500">{errors.imageUrl.message}</p>

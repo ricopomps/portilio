@@ -3,12 +3,14 @@ import {
   UpdateProjectSchema,
 } from "@/lib/validation/project";
 import api from "@/network/axiosInstance";
+import { toFormData } from "@/utils/utils";
 import { Project } from "@prisma/client";
 
 const baseUrl = "projects";
 
 export async function createProject(input: CreateProjectSchema) {
-  const response = await api.post<Project>(baseUrl, input);
+  const formData = toFormData(input);
+  const response = await api.post<Project>(baseUrl, formData);
   return response.data;
 }
 

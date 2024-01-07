@@ -1,9 +1,18 @@
 import { z } from "zod";
 
+const fileImageSchema = z
+  .custom<File | undefined>()
+  .refine((file) => {
+    return !file || (file instanceof File && file.type.startsWith("image/"));
+  }, "Must be an image file")
+  .refine((file) => {
+    return !file || file.size < 1024 * 1024 * 2;
+  }, "File must be less than 2MB");
+
 export const createProjectSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
   description: z.string().min(1, { message: "Description is required" }),
-  imageUrl: z.string().min(1, { message: "Image Url is required" }),
+  imageUrl: fileImageSchema,
 });
 
 export type CreateProjectSchema = z.infer<typeof createProjectSchema>;

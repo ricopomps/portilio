@@ -5,12 +5,15 @@ import {
   updateProjectSchema,
 } from "@/lib/validation/project";
 import { auth } from "@clerk/nextjs";
+import { put } from "@vercel/blob";
+import path from "path";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const body = await req.formData();
+    const values = Object.fromEntries(body.entries());
 
-    const parseResult = createProjectSchema.safeParse(body);
+    const parseResult = createProjectSchema.safeParse(values);
 
     if (!parseResult.success) {
       console.error("Invalid input", parseResult.error);
@@ -26,8 +29,10 @@ export async function POST(req: Request) {
       return Response.json({ error: `Unauthorized` }, { status: 401 });
     }
 
+    const url = await uploadFile(imageUrl);
+
     const createdProject = await prisma.project.create({
-      data: { title, description, imageUrl, userId },
+      data: { title, description, imageUrl: url, userId },
     });
 
     return Response.json(createdProject, { status: 201 });
@@ -63,9 +68,11 @@ export async function PUT(req: Request) {
       return Response.json({ error: `Unauthorized` }, { status: 401 });
     }
 
+    const url = await uploadFile(imageUrl);
+
     const updatedProject = await prisma.project.update({
       where: { id },
-      data: { title, description, imageUrl },
+      data: { title, description, imageUrl: url },
     });
 
     return Response.json(updatedProject, { status: 200 });
@@ -109,4 +116,14 @@ export async function DELETE(req: Request) {
 
     return Response.json({ error: `Error deleting project` }, { status: 500 });
   }
+}
+
+async function uploadFile(file: File | undefined) {
+  if (!file) return;
+  const blob = await put(
+    `portilio/project_image/${file.name}${path.extname(file.name)}`,
+    file,
+    { access: "public", addRandomSuffix: false },
+  );
+  return blob.url;
 }

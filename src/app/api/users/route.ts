@@ -18,8 +18,6 @@ export async function GET(req: Request) {
       query: username,
     });
 
-    console.log(searchedUsers);
-
     return Response.json(searchedUsers, { status: 200 });
   } catch (error) {
     console.error("Error  searching users:", error);

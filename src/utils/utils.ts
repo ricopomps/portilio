@@ -1,6 +1,12 @@
 import { TooManyRequestsError } from "@/network/http-errors";
 import { AxiosError, isAxiosError } from "axios";
+import { clsx, type ClassValue } from "clsx";
 import { toast } from "react-toastify";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export function generateFormData(input: Record<string, any>) {
   const formData = new FormData();
@@ -37,7 +43,6 @@ export function isServer() {
 
 export function toFormData(data: Record<string, any>) {
   const formData = new FormData();
-
   Object.entries(data).forEach(([key, value]) => {
     if (value) {
       if (value instanceof FileList) {

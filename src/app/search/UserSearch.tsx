@@ -1,3 +1,4 @@
+import Pagination from "@/components/Paginations";
 import UserListItem from "@/components/UserListItem";
 import * as UsersApi from "@/network/api/user";
 import { handleError } from "@/utils/utils";
@@ -6,11 +7,17 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface UserSearchProps {
-  username: string;
+  searchParams: {
+    search?: string;
+    page: number;
+  };
 }
 
-export default function UserSearch({ username }: UserSearchProps) {
+export default function UserSearch({
+  searchParams: { search: username, page },
+}: UserSearchProps) {
   const [users, setUsers] = useState<User[]>();
+  const userPerPage = 8;
 
   useEffect(() => {
     async function loadInitialUsers() {
@@ -28,7 +35,7 @@ export default function UserSearch({ username }: UserSearchProps) {
 
   return (
     <div>
-      <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 ">
+      <div className="mb-3 grid gap-3 sm:grid-cols-1 md:grid-cols-2 ">
         {users &&
           users.map((user) => (
             <Link key={user.id} href={`/users/${user.username}`}>
@@ -36,6 +43,19 @@ export default function UserSearch({ username }: UserSearchProps) {
             </Link>
           ))}
       </div>
+      {users && users.length > 0 && (
+        <Pagination
+          currentPage={page}
+          searchParams={
+            new URLSearchParams({
+              ...(username && { search: username }),
+              ...(page && { page: page.toString() }),
+            })
+          }
+          totalPages={Math.ceil(users.length / userPerPage)}
+          baseUrl="search"
+        />
+      )}
     </div>
   );
 }

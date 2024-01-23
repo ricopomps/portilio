@@ -1,3 +1,4 @@
+import Pagination from "@/components/Paginations";
 import Project from "@/components/Project";
 import * as ProjectApi from "@/network/api/project";
 import { handleError } from "@/utils/utils";
@@ -5,11 +6,18 @@ import { Project as ProjectModel } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 interface ProjectSearchProps {
-  search: string;
+  searchParams: {
+    search?: string;
+    page: number;
+  };
 }
 
-export default function ProjectSearch({ search }: ProjectSearchProps) {
+export default function ProjectSearch({
+  searchParams: { search, page },
+}: ProjectSearchProps) {
   const [projects, setProjects] = useState<ProjectModel[]>();
+  const projectPerPage = 9;
+
   useEffect(() => {
     async function loadInitialUsers() {
       setProjects(undefined);
@@ -26,12 +34,25 @@ export default function ProjectSearch({ search }: ProjectSearchProps) {
 
   return (
     <div>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mb-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {projects &&
           projects.map((project) => (
             <Project project={project} key={project.id} viewOnly />
           ))}
       </div>
+      {projects && projects.length > 0 && (
+        <Pagination
+          currentPage={page}
+          searchParams={
+            new URLSearchParams({
+              ...(search && { search }),
+              ...(page && { page: page.toString() }),
+            })
+          }
+          totalPages={Math.ceil(projects.length / projectPerPage)}
+          baseUrl="search"
+        />
+      )}
     </div>
   );
 }

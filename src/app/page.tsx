@@ -16,8 +16,8 @@ export default function Home() {
           Portilio
         </span>
       </div>
-      <p className="max-w-prose text-center">Navigate though portfolios</p>
-      <Link passHref href={"/projects"} className="w-full">
+      <p className="max-w-prose text-center">Navigate through portfolios</p>
+      <Link passHref href={"/search"} className="w-full">
         <button className="btn btn-primary btn-block">View projects</button>
       </Link>
     </main>

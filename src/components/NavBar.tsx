@@ -1,8 +1,8 @@
 import placeholderImage from "@/assets/placeholderImage.png";
-import { UserButton } from "@clerk/nextjs";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import ClerkUserButton from "./ClerkUserButton";
 import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function NavBar() {
@@ -25,12 +25,7 @@ export default function NavBar() {
           <span className="font-bold">Projects</span>
         </Link>
         <div className="flex items-center gap-2">
-          <UserButton
-            afterSignOutUrl="/"
-            appearance={{
-              elements: { avatarBox: { width: "2.5rem", height: "2.5rem" } },
-            }}
-          />
+          <ClerkUserButton />
           <ThemeToggleButton />
           <Link passHref href={"/projects/add-project"} className="w-full">
             <button className="btn btn-primary btn-block">

@@ -1,4 +1,4 @@
-import ProjectDescriptionPage from "@/components/ProjectPage";
+import ProjectDescriptionPage from "@/components/ProjectDescriptionPage";
 import { prisma } from "@/lib/db/prisma";
 import { Project } from "@prisma/client";
 import { notFound } from "next/navigation";

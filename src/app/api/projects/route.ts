@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       return Response.json({ error: `Invalid input` }, { status: 400 });
     }
 
-    const { title, description, imageUrl } = parseResult.data;
+    const { title, description, imageUrl, subtitle } = parseResult.data;
 
     const { userId } = auth();
 
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     const url = await uploadFile(imageUrl);
 
     const createdProject = await prisma.project.create({
-      data: { title, description, imageUrl: url, userId },
+      data: { title, description, imageUrl: url, userId, subtitle },
     });
 
     return Response.json(createdProject, { status: 201 });
@@ -55,7 +55,7 @@ export async function PUT(req: Request) {
       return Response.json({ error: `Invalid input` }, { status: 400 });
     }
 
-    const { id, title, description, imageUrl } = parseResult.data;
+    const { id, title, description, imageUrl, subtitle } = parseResult.data;
 
     const project = await prisma.project.findUnique({ where: { id } });
     if (!project) {
@@ -72,7 +72,7 @@ export async function PUT(req: Request) {
 
     const updatedProject = await prisma.project.update({
       where: { id },
-      data: { title, description, imageUrl: url },
+      data: { title, description, imageUrl: url, subtitle },
     });
 
     return Response.json(updatedProject, { status: 200 });

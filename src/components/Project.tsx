@@ -33,7 +33,7 @@ export default function Project({ project, viewOnly }: ProjectProps) {
       </figure>
       <div className="card-body">
         <h2 className="card-title">{project.title}</h2>
-        <p>{project.description}</p>
+        <h3 className="text-center font-light">{project.subtitle}</h3>
       </div>
     </Link>
   );

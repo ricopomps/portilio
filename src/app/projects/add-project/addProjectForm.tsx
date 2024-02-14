@@ -1,6 +1,7 @@
 "use client";
 
 import LoadingButton from "@/components/LoadingButton";
+import RichTextEditor from "@/components/RichTextEditor";
 import {
   CreateProjectSchema,
   createProjectSchema,
@@ -9,6 +10,7 @@ import * as ProjectApi from "@/network/api/project";
 import { handleError } from "@/utils/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Project } from "@prisma/client";
+import { draftToMarkdown } from "markdown-draft-js";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -30,9 +32,11 @@ export default function AddProjectForm({ projectToEdit }: AddProjectFormProps) {
     formState: { errors, isSubmitting },
   } = useForm<CreateProjectSchema>({
     resolver: zodResolver(createProjectSchema),
-    // defaultValues: {
-    //   ...projectToEdit,
-    // },
+    defaultValues: {
+      title: projectToEdit?.title ?? "",
+      subtitle: projectToEdit?.subtitle ?? "",
+      description: projectToEdit?.description ?? "",
+    },
   });
 
   async function onSubmit(data: CreateProjectSchema) {
@@ -86,10 +90,29 @@ export default function AddProjectForm({ projectToEdit }: AddProjectFormProps) {
           <p className="mb-1 text-red-500">{errors.title.message}</p>
         )}
 
-        <textarea
-          placeholder="Description"
-          className="textarea textarea-bordered mb-3 w-full"
-          {...register("description")}
+        <input
+          placeholder="Subtitle"
+          className="input input-bordered mb-3 w-full"
+          {...register("subtitle")}
+        />
+        {errors.subtitle && (
+          <p className="mb-1 text-red-500">{errors.subtitle.message}</p>
+        )}
+
+        <Controller
+          control={control}
+          name={"description"}
+          render={({ field: { value, onChange, ...field } }) => {
+            return (
+              <RichTextEditor
+                onChange={(draft) => onChange(draftToMarkdown(draft))}
+                ref={field.ref}
+                initialState={projectToEdit?.description ?? ""}
+                editorClassName="textarea textarea-bordered mb-3 w-full"
+                placeholder="Description"
+              />
+            );
+          }}
         />
         {errors.description && (
           <p className="text-red-500">{errors.description.message}</p>

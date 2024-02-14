@@ -13,6 +13,7 @@ datasource db {
 model Project {
     id          String   @id @default(auto()) @map("_id") @db.ObjectId
     title       String
+    subtitle    String
     description String
     userId      String
     imageUrl    String?

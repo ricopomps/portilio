@@ -6,7 +6,7 @@ interface ProjectDescriptionPageProps {
   project: Project;
 }
 export default function ProjectDescriptionPage({
-  project: { title, description, imageUrl },
+  project: { title, description, imageUrl, subtitle },
 }: ProjectDescriptionPageProps) {
   return (
     <section className="w-full grow space-y-5">
@@ -21,10 +21,11 @@ export default function ProjectDescriptionPage({
           />
         </div>
       )}
-      <div className="items- flex justify-center gap-3">
+      <div className="flex items-center justify-center gap-3">
         <div>
           <div>
             <h1 className="text-xl font-bold">{title}</h1>
+            <h3 className="text-center font-light">{subtitle}</h3>
           </div>
         </div>
       </div>

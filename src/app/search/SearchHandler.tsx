@@ -54,7 +54,7 @@ export default function SearchHandler({
   return (
     <div>
       <div>
-        <div className="mb-3 mt-3 flex items-center justify-center gap-3">
+        <div className="mb-3 flex items-center justify-center gap-3">
           <input
             type="search"
             placeholder="Search"

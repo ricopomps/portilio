@@ -7,7 +7,7 @@ import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function NavBar() {
   return (
-    <div className="p-4 shadow">
+    <div className="mb-3 p-4 shadow">
       <div className="m-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
         <Link href="/" className="flex items-center gap-1">
           <Image

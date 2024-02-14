@@ -11,6 +11,7 @@ const fileImageSchema = z
 
 export const createProjectSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
+  subtitle: z.string().min(1, { message: "Subtitle is required" }),
   description: z.string().min(1, { message: "Description is required" }),
   imageUrl: fileImageSchema,
 });
